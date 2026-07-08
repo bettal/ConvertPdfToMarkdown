@@ -11,3 +11,9 @@ override_dh_auto_install:
 	install -m 755 debian/convert-pdf-to-markdown-launcher debian/convert-pdf-to-markdown/usr/bin/convert-pdf-to-markdown
 	mkdir -p debian/convert-pdf-to-markdown/usr/share/applications
 	install -m 644 debian/convert-pdf-to-markdown.desktop debian/convert-pdf-to-markdown/usr/share/applications/
+	mkdir -p debian/convert-pdf-to-markdown/usr/share/icons/hicolor/scalable/apps
+	install -m 644 icons/hicolor/scalable/apps/convert-pdf-to-markdown.svg debian/convert-pdf-to-markdown/usr/share/icons/hicolor/scalable/apps/
+	mkdir -p debian/convert-pdf-to-markdown/usr/share/icons/hicolor/48x48/apps
+	install -m 644 icons/hicolor/48x48/apps/convert-pdf-to-markdown.png debian/convert-pdf-to-markdown/usr/share/icons/hicolor/48x48/apps/
+	mkdir -p debian/convert-pdf-to-markdown/usr/share/icons/hicolor/256x256/apps
+	install -m 644 icons/hicolor/256x256/apps/convert-pdf-to-markdown.png debian/convert-pdf-to-markdown/usr/share/icons/hicolor/256x256/apps/

@@ -1,3 +1,9 @@
+convert-pdf-to-markdown (1.0.4-1) unstable; urgency=medium
+
+  * Automatic version bump.
+
+ -- stas <stas@example.com>  Thu, 09 Jul 2026 00:22:14 +0200
+
 convert-pdf-to-markdown (1.0.3-1) unstable; urgency=medium
 
   * Automatic version bump.

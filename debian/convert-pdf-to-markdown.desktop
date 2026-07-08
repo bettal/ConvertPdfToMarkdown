@@ -5,4 +5,5 @@ Exec=convert-pdf-to-markdown
 Terminal=false
 Type=Application
 Categories=Qt;Development;
+Icon=convert-pdf-to-markdown
 StartupNotify=true
