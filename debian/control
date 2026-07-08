@@ -1,4 +1,4 @@
-Source: pdf2md-gui
+Source: convert-pdf-to-markdown
 Section: utils
 Priority: optional
 Maintainer: stas <stas@example.com>
@@ -9,7 +9,7 @@ Vcs-Git: https://github.com/pymupdf/pymupdf4llm.git
 Vcs-Browser: https://github.com/pymupdf/pymupdf4llm
 Rules-Requires-Root: no
 
-Package: pdf2md-gui
+Package: convert-pdf-to-markdown
 Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends},
          python3-pyqt6,

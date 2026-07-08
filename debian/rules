@@ -1,11 +1,13 @@
 #!/usr/bin/make -f
 
-export PYBUILD_NAME=pdf2md-gui
+export PYBUILD_NAME=convert-pdf-to-markdown
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
 
 override_dh_auto_install:
 	dh_auto_install
-	mkdir -p debian/pdf2md-gui/usr/bin
-	install -m 755 debian/pdf2md-gui-launcher debian/pdf2md-gui/usr/bin/pdf2md-gui
+	mkdir -p debian/convert-pdf-to-markdown/usr/bin
+	install -m 755 debian/convert-pdf-to-markdown-launcher debian/convert-pdf-to-markdown/usr/bin/convert-pdf-to-markdown
+	mkdir -p debian/convert-pdf-to-markdown/usr/share/applications
+	install -m 644 debian/convert-pdf-to-markdown.desktop debian/convert-pdf-to-markdown/usr/share/applications/

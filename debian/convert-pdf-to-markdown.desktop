@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Convert PDF to Markdown
+Comment=Convert PDF documents to Markdown format
+Exec=convert-pdf-to-markdown
+Terminal=false
+Type=Application
+Categories=Qt;Development;
+StartupNotify=true

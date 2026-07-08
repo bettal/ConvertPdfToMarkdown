@@ -1,4 +1,25 @@
-pdf2md-gui (1.0.0-1) unstable; urgency=medium
+convert-pdf-to-markdown (1.0.3-1) unstable; urgency=medium
+
+  * Automatic version bump.
+
+ -- stas <stas@example.com>  Thu, 09 Jul 2026 00:08:52 +0200
+
+convert-pdf-to-markdown (1.0.2-1) unstable; urgency=medium
+
+  * Automatic version bump.
+
+ -- stas <stas@example.com>  Thu, 09 Jul 2026 00:03:32 +0200
+
+convert-pdf-to-markdown (1.0.1-1) unstable; urgency=medium
+
+  * Fixed postinst: added --ignore-installed to pip to handle debian pymupdf.
+  * Fixed postinst: write test PDF to tempfile before compatibility test.
+  * Fixed postinst: || true on test command to avoid set -e abort.
+  * Added Makefile + bump-version.sh for automated builds.
+
+ -- stas <stas@example.com>  Wed, 08 Jul 2026 23:40:00 +0300
+
+convert-pdf-to-markdown (1.0.0-1) unstable; urgency=medium
 
   * Initial release.
   * AGPL v3 license (same as pymupdf4llm).

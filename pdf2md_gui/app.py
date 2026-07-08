@@ -17,11 +17,13 @@
 import sys
 import os
 import threading
+from importlib.metadata import version
 
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QPushButton, QLineEdit, QComboBox, QCheckBox,
-    QSpinBox, QTextEdit, QFileDialog, QMessageBox, QGroupBox
+    QSpinBox, QTextEdit, QFileDialog, QMessageBox, QGroupBox,
+    QMenuBar
 )
 from PyQt6.QtCore import Qt
 
@@ -36,6 +38,8 @@ class PDFToMarkdownApp(QMainWindow):
 
         self.pdf_path = ""
         self.output_path = ""
+
+        self._create_menu()
 
         central = QWidget()
         self.setCentralWidget(central)
@@ -151,6 +155,26 @@ class PDFToMarkdownApp(QMainWindow):
         self.log_text.setReadOnly(True)
         log_layout.addWidget(self.log_text)
         layout.addWidget(log_group, 1)
+
+    def _create_menu(self):
+        menubar = self.menuBar()
+        help_menu = menubar.addMenu("Help")
+        help_menu.addAction("About", self._show_about)
+
+    def _show_about(self):
+        try:
+            ver = version("convert-pdf-to-markdown")
+        except Exception:
+            ver = "1.0.2"
+        QMessageBox.about(
+            self,
+            "About Convert PDF to Markdown",
+            f"<b>Convert PDF to Markdown</b><br>"
+            f"Version: {ver}<br>"
+            f"Author: stas<br>"
+            f"License: GNU AGPL v3<br><br>"
+            f"<a href='https://github.com/pymupdf/pymupdf4llm'>Repository</a>"
+        )
 
     def _browse_pdf(self):
         path, _ = QFileDialog.getOpenFileName(
@@ -278,6 +302,8 @@ class PDFToMarkdownApp(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
+    app.setApplicationName("Convert PDF to Markdown")
+    app.setDesktopFileName("convert-pdf-to-markdown")
     window = PDFToMarkdownApp()
     window.show()
     sys.exit(app.exec())

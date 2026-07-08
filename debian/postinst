@@ -12,7 +12,7 @@ set -e
 
 PYTHON=$(which python3)
 PACKAGE="pymupdf4llm"
-LOG="/var/log/pdf2md-gui-install.log"
+LOG="/var/log/convert-pdf-to-markdown-install.log"
 
 echo "[pdf2md-gui] postinst started at $(date)" >> "$LOG" 2>&1
 
@@ -34,26 +34,28 @@ fi
 
 echo "[pdf2md-gui] Latest version on PyPI: $LATEST" >> "$LOG"
 
-# --- step 2: install latest via pip ---
+# --- step 2: install latest via pip (ignore-installed to work around debian pymupdf) ---
 echo "[pdf2md-gui] Installing $PACKAGE==$LATEST via pip..." >> "$LOG"
-$PYTHON -m pip install "$PACKAGE==$LATEST" --upgrade --break-system-packages >> "$LOG" 2>&1 || true
+$PYTHON -m pip install "$PACKAGE==$LATEST" --upgrade --ignore-installed --break-system-packages >> "$LOG" 2>&1 || true
 
 # --- step 3: compatibility test ---
 echo "[pdf2md-gui] Running compatibility test..." >> "$LOG"
 TEST_RESULT=$($PYTHON -c "
-import pymupdf4llm, pymupdf, io, sys
+import pymupdf4llm, pymupdf, io, sys, tempfile, os
 try:
+    tmp = tempfile.NamedTemporaryFile(suffix='.pdf', delete=False)
     doc = pymupdf.open()
     doc.new_page()
     doc.new_page()
     doc[0].insert_text((50, 50), 'Test', fontsize=12)
-    buf = doc.tobytes()
+    doc.save(tmp.name)
     doc.close()
-    md = pymupdf4llm.to_markdown('test.pdf', show_progress=False)
+    md = pymupdf4llm.to_markdown(tmp.name, show_progress=False)
+    os.unlink(tmp.name)
     print('OK')
 except Exception as e:
     print('FAIL:' + str(e))
-" 2>> "$LOG")
+" 2>> "$LOG" || true)
 
 case "$TEST_RESULT" in
     OK)

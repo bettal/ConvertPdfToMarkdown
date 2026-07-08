@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pdf2md-gui",
-    version="1.0.0",
+    name="convert-pdf-to-markdown",
+    version="1.0.3",
     description="Graphical interface for PyMuPDF4LLM — convert PDF to Markdown",
     long_description=open("README.md").read() if __import__("os").path.exists("README.md") else "",
     long_description_content_type="text/markdown",
@@ -18,8 +18,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "pdf2md-gui=pdf2md_gui.app:main",
-            "pdf2md-gui-qt=pdf2md_gui.app:main",
+            "convert-pdf-to-markdown=pdf2md_gui.app:main",
         ],
     },
     classifiers=[
