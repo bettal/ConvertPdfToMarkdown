@@ -1,4 +1,4 @@
-# pdf2md-gui
+# Convert PDF to Markdown
 
 Graphical interface for [PyMuPDF4LLM](https://github.com/pymupdf/pymupdf4llm) â€” convert PDF files to Markdown.
 
@@ -22,7 +22,7 @@ Graphical interface for [PyMuPDF4LLM](https://github.com/pymupdf/pymupdf4llm) â€
 ### Debian package
 
 ```bash
-sudo dpkg -i pdf2md-gui_1.0.0-1_all.deb
+sudo dpkg -i dist/convert-pdf-to-markdown_*.deb
 sudo apt-get install -f  # install dependencies
 ```
 
@@ -30,7 +30,7 @@ sudo apt-get install -f  # install dependencies
 
 ```bash
 pip install -e .
-pdf2md-gui
+convert-pdf-to-markdown
 ```
 
 ### Run without install

@@ -7,7 +7,7 @@ setup(
     long_description=open("README.md").read() if __import__("os").path.exists("README.md") else "",
     long_description_content_type="text/markdown",
     author="stas",
-    url="https://github.com/pymupdf/pymupdf4llm",
+    url="https://github.com/bettal/ConvertPdfToMarkdown",
     license="GNU AGPL v3",
     license_files=["LICENSE"],
     packages=find_packages(),

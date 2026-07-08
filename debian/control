@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: stas <stas@example.com>
 Build-Depends: debhelper-compat (= 13), dh-python, python3-all, python3-setuptools
 Standards-Version: 4.6.2
-Homepage: https://github.com/pymupdf/pymupdf4llm
-Vcs-Git: https://github.com/pymupdf/pymupdf4llm.git
-Vcs-Browser: https://github.com/pymupdf/pymupdf4llm
+Homepage: https://github.com/bettal/ConvertPdfToMarkdown
+Vcs-Git: https://github.com/bettal/ConvertPdfToMarkdown.git
+Vcs-Browser: https://github.com/bettal/ConvertPdfToMarkdown
 Rules-Requires-Root: no
 
 Package: convert-pdf-to-markdown

@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: pdf2md-gui
+Upstream-Name: convert-pdf-to-markdown
 Upstream-Contact: stas <stas@example.com>
-Source: https://github.com/pymupdf/pymupdf4llm
+Source: https://github.com/bettal/ConvertPdfToMarkdown
 
 Files: *
 Copyright: 2025 stas

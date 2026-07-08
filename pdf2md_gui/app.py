@@ -173,7 +173,7 @@ class PDFToMarkdownApp(QMainWindow):
             f"Version: {ver}<br>"
             f"Author: stas<br>"
             f"License: GNU AGPL v3<br><br>"
-            f"<a href='https://github.com/pymupdf/pymupdf4llm'>Repository</a>"
+            f"<a href='https://github.com/bettal/ConvertPdfToMarkdown'>Repository</a>"
         )
 
     def _browse_pdf(self):
