@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=pdf2md-gui
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_install:
+	dh_auto_install
+	mkdir -p debian/pdf2md-gui/usr/bin
+	install -m 755 debian/pdf2md-gui-launcher debian/pdf2md-gui/usr/bin/pdf2md-gui

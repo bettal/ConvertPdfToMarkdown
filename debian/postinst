@@ -1,0 +1,76 @@
+#!/bin/sh
+set -e
+
+# postinst: check pymupdf4llm version compatibility on install
+#
+# Strategy:
+#   1. Query PyPI for the latest version of pymupdf4llm.
+#   2. Try to install it via pip (user-site or system).
+#   3. Run a quick compatibility test (import + convert a tiny PDF).
+#   4. If the test passes — keep the latest version.
+#   5. If the test fails — revert to the version shipped by apt.
+
+PYTHON=$(which python3)
+PACKAGE="pymupdf4llm"
+LOG="/var/log/pdf2md-gui-install.log"
+
+echo "[pdf2md-gui] postinst started at $(date)" >> "$LOG" 2>&1
+
+# --- step 1: get latest version from PyPI ---
+echo "[pdf2md-gui] Checking latest $PACKAGE version on PyPI..." >> "$LOG"
+LATEST=$($PYTHON -c "
+import urllib.request, json
+try:
+    data = json.loads(urllib.request.urlopen('https://pypi.org/pypi/$PACKAGE/json', timeout=10).read())
+    print(data['info']['version'])
+except Exception:
+    print('')
+" 2>/dev/null)
+
+if [ -z "$LATEST" ]; then
+    echo "[pdf2md-gui] Could not fetch latest version, keeping apt version." >> "$LOG"
+    exit 0
+fi
+
+echo "[pdf2md-gui] Latest version on PyPI: $LATEST" >> "$LOG"
+
+# --- step 2: install latest via pip ---
+echo "[pdf2md-gui] Installing $PACKAGE==$LATEST via pip..." >> "$LOG"
+$PYTHON -m pip install "$PACKAGE==$LATEST" --upgrade --break-system-packages >> "$LOG" 2>&1 || true
+
+# --- step 3: compatibility test ---
+echo "[pdf2md-gui] Running compatibility test..." >> "$LOG"
+TEST_RESULT=$($PYTHON -c "
+import pymupdf4llm, pymupdf, io, sys
+try:
+    doc = pymupdf.open()
+    doc.new_page()
+    doc.new_page()
+    doc[0].insert_text((50, 50), 'Test', fontsize=12)
+    buf = doc.tobytes()
+    doc.close()
+    md = pymupdf4llm.to_markdown('test.pdf', show_progress=False)
+    print('OK')
+except Exception as e:
+    print('FAIL:' + str(e))
+" 2>> "$LOG")
+
+case "$TEST_RESULT" in
+    OK)
+        echo "[pdf2md-gui] Compatibility test PASSED — keeping $PACKAGE==$LATEST" >> "$LOG"
+        ;;
+    FAIL:*)
+        REASON=${TEST_RESULT#FAIL:}
+        echo "[pdf2md-gui] Compatibility test FAILED: $REASON" >> "$LOG"
+        echo "[pdf2md-gui] Reverting to apt-provided version..." >> "$LOG"
+        apt-get install --reinstall --yes python3-pymupdf4llm 2>/dev/null || \
+        $PYTHON -m pip install "$PACKAGE" --no-deps --ignore-installed --break-system-packages >> "$LOG" 2>&1 || true
+        echo "[pdf2md-gui] Fallback done." >> "$LOG"
+        ;;
+    *)
+        echo "[pdf2md-gui] Compatibility test produced unknown result, keeping current." >> "$LOG"
+        ;;
+esac
+
+echo "[pdf2md-gui] postinst finished at $(date)" >> "$LOG"
+exit 0

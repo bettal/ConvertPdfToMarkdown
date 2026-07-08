@@ -1,0 +1,8 @@
+pdf2md-gui (1.0.0-1) unstable; urgency=medium
+
+  * Initial release.
+  * AGPL v3 license (same as pymupdf4llm).
+  * PyQt6 graphical interface.
+  * Automatic pymupdf4llm version check and compatibility test on install.
+
+ -- stas <stas@example.com>  Wed, 08 Jul 2026 16:30:00 +0300

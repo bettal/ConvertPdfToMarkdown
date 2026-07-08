@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.idea/
+*.egg-info/
+.pybuild/
+dist/
+build/
+*.deb
+debian/.debhelper/
+debian/files
+debian/*.debhelper.log
+debian/*.substvars
+debian/pdf2md-gui/
