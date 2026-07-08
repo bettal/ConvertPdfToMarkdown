@@ -23,6 +23,11 @@ ConvertPdfToMarkdown/
 │   ├── convert-pdf-to-markdown-launcher  # Shell launcher
 │   ├── bump-version.sh # Auto version bump
 │   └── postinst        # Post-install script
+├── icons/              # Application icons (Candy Icons style)
+│   └── hicolor/
+│       ├── scalable/apps/   # SVG source
+│       ├── 48x48/apps/      # PNG 48px (menu)
+│       └── 256x256/apps/    # PNG 256px (window/taskbar)
 ├── dist/               # Built .deb packages
 ├── Makefile            # Build & release automation
 ├── setup.py            # Python package metadata
