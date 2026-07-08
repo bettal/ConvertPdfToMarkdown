@@ -1,38 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 48 48" width="48" height="48">
   <defs>
-    <linearGradient id="doc1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#e53935"/>
-      <stop offset="100%" style="stop-color:#b71c1c"/>
+    <linearGradient id="bg" x1="0.05" y1="0.05" x2="0.95" y2="0.95">
+      <stop offset="0%" stop-color="#fb8b5f"/>
+      <stop offset="50%" stop-color="#e84393"/>
+      <stop offset="100%" stop-color="#6c5ce7"/>
     </linearGradient>
-    <linearGradient id="doc2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#43a047"/>
-      <stop offset="100%" style="stop-color:#2e7d32"/>
+    <linearGradient id="doc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a29bfe"/>
+      <stop offset="100%" stop-color="#6c5ce7"/>
     </linearGradient>
-    <linearGradient id="arrow" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#1565c0"/>
-      <stop offset="100%" style="stop-color:#0d47a1"/>
+    <linearGradient id="arrow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fd79a8"/>
+      <stop offset="100%" stop-color="#e84393"/>
+    </linearGradient>
+    <linearGradient id="md" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#55efc4"/>
+      <stop offset="100%" stop-color="#00b894"/>
     </linearGradient>
   </defs>
-  <!-- PDF Document -->
-  <rect x="8" y="16" width="48" height="96" rx="6" ry="6" fill="url(#doc1)" stroke="#b71c1c" stroke-width="1.5"/>
-  <rect x="36" y="16" width="20" height="20" rx="0" ry="6" fill="#ffcdd2"/>
-  <text x="46" y="30" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#c62828" text-anchor="middle">PDF</text>
-  <line x1="16" y1="48" x2="48" y2="48" stroke="#ffcdd2" stroke-width="2" stroke-linecap="round"/>
-  <line x1="16" y1="56" x2="44" y2="56" stroke="#ffcdd2" stroke-width="2" stroke-linecap="round"/>
-  <line x1="16" y1="64" x2="40" y2="64" stroke="#ffcdd2" stroke-width="2" stroke-linecap="round"/>
-  <line x1="16" y1="72" x2="48" y2="72" stroke="#ffcdd2" stroke-width="2" stroke-linecap="round"/>
-  <line x1="16" y1="80" x2="36" y2="80" stroke="#ffcdd2" stroke-width="2" stroke-linecap="round"/>
-  <!-- Arrow -->
-  <line x1="62" y1="64" x2="72" y2="64" stroke="url(#arrow)" stroke-width="4" stroke-linecap="round"/>
-  <polygon points="70,58 78,64 70,70" fill="url(#arrow)"/>
-  <!-- MD Document -->
-  <rect x="76" y="16" width="48" height="96" rx="6" ry="6" fill="url(#doc2)" stroke="#2e7d32" stroke-width="1.5"/>
-  <rect x="96" y="16" width="28" height="20" rx="0" ry="6" fill="#c8e6c9"/>
-  <text x="110" y="30" font-family="Arial, sans-serif" font-weight="bold" font-size="12" fill="#2e7d32" text-anchor="middle">MD</text>
-  <text x="84" y="52" font-family="Arial, sans-serif" font-weight="bold" font-size="9" fill="#c8e6c9"># H1</text>
-  <text x="84" y="64" font-family="Arial, sans-serif" font-weight="bold" font-size="9" fill="#c8e6c9">## H2</text>
-  <text x="84" y="76" font-family="Arial, sans-serif" font-size="9" fill="#c8e6c9">**bold**</text>
-  <text x="84" y="88" font-family="Arial, sans-serif" font-size="9" fill="#c8e6c9">- list</text>
-  <line x1="84" y1="96" x2="116" y2="96" stroke="#c8e6c9" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="84" y1="102" x2="108" y2="102" stroke="#c8e6c9" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="2" y="2" width="44" height="44" rx="11" ry="11" fill="url(#bg)"/>
+  <rect x="7" y="10" width="15" height="28" rx="3" ry="3" fill="url(#doc)"/>
+  <rect x="15.5" y="10" width="6.5" height="7" rx="0" ry="3" fill="#dfe6e9"/>
+  <text x="18.5" y="15.5" font-family="Arial, sans-serif" font-weight="900" font-size="5" fill="#6c5ce7" text-anchor="middle">PDF</text>
+  <polygon points="23.5,24 27.5,20 27.5,28" fill="url(#arrow)"/>
+  <rect x="29" y="10" width="15" height="28" rx="3" ry="3" fill="url(#md)"/>
+  <rect x="37" y="10" width="7" height="7" rx="0" ry="3" fill="#dfe6e9"/>
+  <text x="40.5" y="15.5" font-family="Arial, sans-serif" font-weight="900" font-size="5" fill="#00b894" text-anchor="middle">MD</text>
 </svg>
