@@ -14,10 +14,10 @@ PYTHON=$(which python3)
 PACKAGE="pymupdf4llm"
 LOG="/var/log/convert-pdf-to-markdown-install.log"
 
-echo "[pdf2md-gui] postinst started at $(date)" >> "$LOG" 2>&1
+echo "[convert-pdf-to-markdown] postinst started at $(date)" >> "$LOG" 2>&1
 
 # --- step 1: get latest version from PyPI ---
-echo "[pdf2md-gui] Checking latest $PACKAGE version on PyPI..." >> "$LOG"
+echo "[convert-pdf-to-markdown] Checking latest $PACKAGE version on PyPI..." >> "$LOG"
 LATEST=$($PYTHON -c "
 import urllib.request, json
 try:
@@ -28,18 +28,18 @@ except Exception:
 " 2>/dev/null)
 
 if [ -z "$LATEST" ]; then
-    echo "[pdf2md-gui] Could not fetch latest version, keeping apt version." >> "$LOG"
+    echo "[convert-pdf-to-markdown] Could not fetch latest version, keeping apt version." >> "$LOG"
     exit 0
 fi
 
-echo "[pdf2md-gui] Latest version on PyPI: $LATEST" >> "$LOG"
+echo "[convert-pdf-to-markdown] Latest version on PyPI: $LATEST" >> "$LOG"
 
 # --- step 2: install latest via pip (ignore-installed to work around debian pymupdf) ---
-echo "[pdf2md-gui] Installing $PACKAGE==$LATEST via pip..." >> "$LOG"
+echo "[convert-pdf-to-markdown] Installing $PACKAGE==$LATEST via pip..." >> "$LOG"
 $PYTHON -m pip install "$PACKAGE==$LATEST" --upgrade --ignore-installed --break-system-packages >> "$LOG" 2>&1 || true
 
 # --- step 3: compatibility test ---
-echo "[pdf2md-gui] Running compatibility test..." >> "$LOG"
+echo "[convert-pdf-to-markdown] Running compatibility test..." >> "$LOG"
 TEST_RESULT=$($PYTHON -c "
 import pymupdf4llm, pymupdf, io, sys, tempfile, os
 try:
@@ -59,20 +59,24 @@ except Exception as e:
 
 case "$TEST_RESULT" in
     OK)
-        echo "[pdf2md-gui] Compatibility test PASSED — keeping $PACKAGE==$LATEST" >> "$LOG"
+        echo "[convert-pdf-to-markdown] Compatibility test PASSED — keeping $PACKAGE==$LATEST" >> "$LOG"
         ;;
     FAIL:*)
         REASON=${TEST_RESULT#FAIL:}
-        echo "[pdf2md-gui] Compatibility test FAILED: $REASON" >> "$LOG"
-        echo "[pdf2md-gui] Reverting to apt-provided version..." >> "$LOG"
+        echo "[convert-pdf-to-markdown] Compatibility test FAILED: $REASON" >> "$LOG"
+        echo "[convert-pdf-to-markdown] Reverting to apt-provided version..." >> "$LOG"
         apt-get install --reinstall --yes python3-pymupdf4llm 2>/dev/null || \
         $PYTHON -m pip install "$PACKAGE" --no-deps --ignore-installed --break-system-packages >> "$LOG" 2>&1 || true
-        echo "[pdf2md-gui] Fallback done." >> "$LOG"
+        echo "[convert-pdf-to-markdown] Fallback done." >> "$LOG"
         ;;
     *)
-        echo "[pdf2md-gui] Compatibility test produced unknown result, keeping current." >> "$LOG"
+        echo "[convert-pdf-to-markdown] Compatibility test produced unknown result, keeping current." >> "$LOG"
         ;;
 esac
 
-echo "[pdf2md-gui] postinst finished at $(date)" >> "$LOG"
+# --- step 4: refresh icon caches ---
+gtk-update-icon-cache /usr/share/icons/hicolor/ 2>/dev/null || true
+kbuildsycoca7 --noincremental 2>/dev/null || kbuildsycoca6 --noincremental 2>/dev/null || true
+
+echo "[convert-pdf-to-markdown] postinst finished at $(date)" >> "$LOG"
 exit 0

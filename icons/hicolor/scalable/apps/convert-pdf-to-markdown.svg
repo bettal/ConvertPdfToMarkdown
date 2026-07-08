@@ -1,29 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 48 48" width="48" height="48">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
   <defs>
-    <linearGradient id="bg" x1="0.05" y1="0.05" x2="0.95" y2="0.95">
-      <stop offset="0%" stop-color="#fb8b5f"/>
-      <stop offset="50%" stop-color="#e84393"/>
-      <stop offset="100%" stop-color="#6c5ce7"/>
-    </linearGradient>
-    <linearGradient id="doc" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#a29bfe"/>
-      <stop offset="100%" stop-color="#6c5ce7"/>
-    </linearGradient>
-    <linearGradient id="arrow" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#fd79a8"/>
-      <stop offset="100%" stop-color="#e84393"/>
+      <stop offset="100%" stop-color="#6c5ce7"/>
     </linearGradient>
-    <linearGradient id="md" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="left" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a29bfe"/>
+      <stop offset="100%" stop-color="#4834d4"/>
+    </linearGradient>
+    <linearGradient id="right" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#55efc4"/>
       <stop offset="100%" stop-color="#00b894"/>
     </linearGradient>
+    <linearGradient id="arr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffeaa7"/>
+      <stop offset="100%" stop-color="#fdcb6e"/>
+    </linearGradient>
   </defs>
-  <rect x="2" y="2" width="44" height="44" rx="11" ry="11" fill="url(#bg)"/>
-  <rect x="7" y="10" width="15" height="28" rx="3" ry="3" fill="url(#doc)"/>
-  <rect x="15.5" y="10" width="6.5" height="7" rx="0" ry="3" fill="#dfe6e9"/>
-  <text x="18.5" y="15.5" font-family="Arial, sans-serif" font-weight="900" font-size="5" fill="#6c5ce7" text-anchor="middle">PDF</text>
-  <polygon points="23.5,24 27.5,20 27.5,28" fill="url(#arrow)"/>
-  <rect x="29" y="10" width="15" height="28" rx="3" ry="3" fill="url(#md)"/>
-  <rect x="37" y="10" width="7" height="7" rx="0" ry="3" fill="#dfe6e9"/>
-  <text x="40.5" y="15.5" font-family="Arial, sans-serif" font-weight="900" font-size="5" fill="#00b894" text-anchor="middle">MD</text>
+  <rect x="2" y="2" width="44" height="44" rx="11" fill="url(#bg)"/>
+  <rect x="6" y="10" width="13" height="28" rx="2.5" fill="url(#left)"/>
+  <path d="M 16.5 10 C 17.88 10 19 11.12 19 12.5 L 19 16 L 14.5 10 Z" fill="#81ecec"/>
+  <rect x="8.5" y="19" width="8" height="1.5" rx="0.75" fill="#dfe6e9"/>
+  <rect x="8.5" y="23" width="6" height="1.5" rx="0.75" fill="#dfe6e9"/>
+  <rect x="8.5" y="27" width="8" height="1.5" rx="0.75" fill="#dfe6e9"/>
+  <polygon points="21.5,24 24.5,21.5 24.5,26.5" fill="url(#arr)"/>
+  <rect x="27" y="10" width="15" height="28" rx="2.5" fill="url(#right)"/>
+  <path d="M 38 10 C 39.1 10 40 10.9 40 12 L 40 15 L 35.5 10 Z" fill="#b2bec3"/>
+  <rect x="29" y="19" width="11" height="1.5" rx="0.75" fill="#dfe6e9"/>
+  <rect x="29" y="23" width="8" height="1.5" rx="0.75" fill="#dfe6e9"/>
+  <rect x="29" y="27" width="11" height="1.5" rx="0.75" fill="#dfe6e9"/>
 </svg>
