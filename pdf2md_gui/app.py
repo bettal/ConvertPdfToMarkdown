@@ -26,12 +26,15 @@ from PyQt6.QtWidgets import (
     QSpinBox, QTextEdit, QFileDialog, QMessageBox, QGroupBox,
     QMenuBar
 )
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, pyqtSignal
 
 import pymupdf4llm
 
 
 class PDFToMarkdownApp(QMainWindow):
+    log_signal = pyqtSignal(str)
+    conversion_done = pyqtSignal(str, str, str)  # status, title, message
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("PDF to Markdown Converter")
@@ -39,6 +42,9 @@ class PDFToMarkdownApp(QMainWindow):
 
         self.pdf_path = ""
         self.output_path = ""
+
+        self.log_signal.connect(self._append_log)
+        self.conversion_done.connect(self._on_conversion_done)
 
         self._create_menu()
 
@@ -197,11 +203,21 @@ class PDFToMarkdownApp(QMainWindow):
             self.out_label.setText(path)
 
     def _log(self, msg):
+        self.log_signal.emit(msg)
+
+    def _append_log(self, msg):
         self.log_text.append(msg)
         self.log_text.verticalScrollBar().setValue(
             self.log_text.verticalScrollBar().maximum()
         )
-        QApplication.processEvents()
+
+    def _on_conversion_done(self, status, title, message):
+        self.convert_btn.setEnabled(True)
+        self.convert_btn.setText("Convert")
+        if status == "success":
+            QMessageBox.information(self, title, message)
+        else:
+            QMessageBox.critical(self, title, message)
 
     def _parse_pages(self, raw: str, total: int):
         if not raw.strip():
@@ -295,17 +311,15 @@ class PDFToMarkdownApp(QMainWindow):
                 f"~{len(md_text.splitlines())} lines"
             )
 
-            QMessageBox.information(
-                self, "Success", f"Converted successfully!\nSaved to:\n{out}"
+            self.conversion_done.emit(
+                "success", "Success",
+                f"Converted successfully!\nSaved to:\n{out}"
             )
 
         except Exception as e:
             self._log(f"ERROR: {e}")
             self._log(f"TRACEBACK:\n{traceback.format_exc()}")
-            QMessageBox.critical(self, "Error", str(e))
-        finally:
-            self.convert_btn.setEnabled(True)
-            self.convert_btn.setText("Convert")
+            self.conversion_done.emit("error", "Error", str(e))
 
 
 def main():
