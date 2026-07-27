@@ -18,6 +18,7 @@ import sys
 import os
 import traceback
 import threading
+import datetime
 from importlib.metadata import version
 
 from PyQt6.QtWidgets import (
@@ -42,6 +43,7 @@ class PDFToMarkdownApp(QMainWindow):
 
         self.pdf_path = ""
         self.output_path = ""
+        self.log_file = None
 
         self.log_signal.connect(self._append_log)
         self.conversion_done.connect(self._on_conversion_done)
@@ -206,14 +208,22 @@ class PDFToMarkdownApp(QMainWindow):
         self.log_signal.emit(msg)
 
     def _append_log(self, msg):
-        self.log_text.append(msg)
+        stamp = datetime.datetime.now().strftime("%H:%M:%S")
+        line = f"[{stamp}] {msg}"
+        self.log_text.append(line)
         self.log_text.verticalScrollBar().setValue(
             self.log_text.verticalScrollBar().maximum()
         )
+        if self.log_file:
+            self.log_file.write(line + "\n")
+            self.log_file.flush()
 
     def _on_conversion_done(self, status, title, message):
         self.convert_btn.setEnabled(True)
         self.convert_btn.setText("Convert")
+        if self.log_file:
+            self.log_file.close()
+            self.log_file = None
         if status == "success":
             QMessageBox.information(self, title, message)
         else:
@@ -269,6 +279,14 @@ class PDFToMarkdownApp(QMainWindow):
         self.convert_btn.setEnabled(False)
         self.convert_btn.setText("Converting...")
         self.log_text.clear()
+
+        log_path = out + ".log"
+        try:
+            if self.log_file:
+                self.log_file.close()
+            self.log_file = open(log_path, "w", encoding="utf-8")
+        except Exception:
+            self.log_file = None
 
         thread = threading.Thread(
             target=self._run_conversion, args=(self.pdf_path, out, kwargs), daemon=True
