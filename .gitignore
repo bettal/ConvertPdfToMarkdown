@@ -19,4 +19,4 @@ debian/debhelper-build-stamp
 *.exe
 *.spec
 *.ico
-apt-get
+*.zip

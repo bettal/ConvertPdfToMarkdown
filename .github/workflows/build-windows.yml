@@ -33,11 +33,15 @@ jobs:
         run: |
           pyinstaller build-windows.spec
 
+      - name: Zip dist folder
+        run: |
+          Compress-Archive -Path dist/ConvertPdfToMarkdown/* -DestinationPath ConvertPdfToMarkdown.zip
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ConvertPdfToMarkdown-win
-          path: dist/ConvertPdfToMarkdown.exe
+          path: ConvertPdfToMarkdown.zip
 
   release:
     needs: build
@@ -57,11 +61,11 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ConvertPdfToMarkdown.exe
+          files: ConvertPdfToMarkdown.zip
           name: "Convert PDF to Markdown ${{ github.ref_name }}"
           tag_name: "${{ github.ref_name }}"
           body: |
-            Windows build - built automatically from GitHub Actions
+            Windows build (portable, extract and run) - built automatically from GitHub Actions
             Tag: ${{ github.ref_name }}
           draft: false
           prerelease: false

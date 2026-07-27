@@ -1,10 +1,11 @@
 # -*- mode: python ; coding: utf-8 -*-
-from PyInstaller.utils.hooks import collect_all
+from PyInstaller.utils.hooks import collect_all, collect_submodules
 
 block_cipher = None
 
 pymupdf_datas, pymupdf_binaries, pymupdf_hidden = collect_all('pymupdf')
 pyqt6_datas, pyqt6_binaries, pyqt6_hidden = collect_all('PyQt6')
+llm_hidden = collect_submodules('pymupdf4llm')
 
 a = Analysis(
     ['pdf2md_gui/app.py'],
@@ -15,13 +16,9 @@ a = Analysis(
     ] + pymupdf_datas + pyqt6_datas,
     hiddenimports=[
         'fitz',
+        'pymupdf',
         'pymupdf4llm',
-        'pymupdf4llm.helpers',
-        'pymupdf4llm.helpers.multiline',
-        'pymupdf4llm.helpers.text_helpers',
-        'pymupdf4llm.helpers.image_helpers',
-        'pymupdf4llm.helpers.table_helpers',
-    ] + pymupdf_hidden + pyqt6_hidden,
+    ] + pymupdf_hidden + pyqt6_hidden + llm_hidden,
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -42,9 +39,8 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 exe = EXE(
     pyz,
     a.scripts,
-    a.binaries,
-    a.datas,
     [],
+    exclude_binaries=True,
     name='ConvertPdfToMarkdown',
     debug=False,
     bootloader_ignore_signals=False,
@@ -59,4 +55,14 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     icon='icon.ico',
+)
+
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='ConvertPdfToMarkdown',
 )

@@ -16,6 +16,7 @@
 
 import sys
 import os
+import traceback
 import threading
 from importlib.metadata import version
 
@@ -261,6 +262,7 @@ class PDFToMarkdownApp(QMainWindow):
     def _run_conversion(self, pdf, out, kwargs):
         try:
             self._log(f"Opening: {pdf}")
+            self._log(f"Options: {kwargs}")
 
             pages_arg = kwargs.pop("pages", None)
             if pages_arg is not None:
@@ -276,8 +278,13 @@ class PDFToMarkdownApp(QMainWindow):
             else:
                 self._log("All pages selected")
 
+            self._log(f"pymupdf4llm version: {pymupdf4llm.__version__}")
             self._log("Converting to Markdown...")
             md_text = pymupdf4llm.to_markdown(pdf, **kwargs)
+
+            if not md_text:
+                self._log("WARNING: Conversion returned empty result!")
+                self._log("The PDF may be scanned images without OCR, or the DLL failed to load.")
 
             with open(out, "w", encoding="utf-8") as f:
                 f.write(md_text)
@@ -294,6 +301,7 @@ class PDFToMarkdownApp(QMainWindow):
 
         except Exception as e:
             self._log(f"ERROR: {e}")
+            self._log(f"TRACEBACK:\n{traceback.format_exc()}")
             QMessageBox.critical(self, "Error", str(e))
         finally:
             self.convert_btn.setEnabled(True)
