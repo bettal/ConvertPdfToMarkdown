@@ -58,8 +58,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ConvertPdfToMarkdown.exe
-          name: "Convert PDF to Markdown ${{ github.ref_name }}-win"
-          tag_name: "${{ github.ref_name }}-win"
+          name: "Convert PDF to Markdown ${{ github.ref_name }}"
+          tag_name: "${{ github.ref_name }}"
           body: |
             Windows build - built automatically from GitHub Actions
             Tag: ${{ github.ref_name }}
