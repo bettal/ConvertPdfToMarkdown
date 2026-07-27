@@ -1,0 +1,70 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ['3.11']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python-version }}'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyQt6 pymupdf4llm pyinstaller pillow
+
+      - name: Convert icon to ICO
+        run: |
+          python -c "from PIL import Image; Image.open('icons/hicolor/256x256/apps/convert-pdf-to-markdown.png').save('icon.ico', format='ICO')"
+
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --noconsole --onefile --icon=icon.ico --name "ConvertPdfToMarkdown" --spec build-windows.spec pdf2md_gui/app.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ConvertPdfToMarkdown-${{ matrix.python-version }}-win
+          path: dist/ConvertPdfToMarkdown.exe
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ConvertPdfToMarkdown-3.11-win
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ConvertPdfToMarkdown.exe
+          name: "Convert PDF to Markdown ${{ github.ref_name }}-win"
+          tag_name: "${{ github.ref_name }}-win"
+          body: |
+            Windows build - built automatically from GitHub Actions
+            Tag: ${{ github.ref_name }}
+          draft: false
+          prerelease: false

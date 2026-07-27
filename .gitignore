@@ -16,3 +16,7 @@ debian/convert-pdf-to-markdown/
 debian/convert-pdf-to-markdown.postinst.debhelper
 debian/convert-pdf-to-markdown.prerm.debhelper
 debian/debhelper-build-stamp
+*.exe
+*.spec
+*.ico
+apt-get
