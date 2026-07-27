@@ -11,9 +11,6 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        python-version: ['3.11']
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '${{ matrix.python-version }}'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -34,12 +31,12 @@ jobs:
 
       - name: Build with PyInstaller
         run: |
-          pyinstaller --noconsole --onefile --icon=icon.ico --name "ConvertPdfToMarkdown" --spec build-windows.spec pdf2md_gui/app.py
+          pyinstaller build-windows.spec
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ConvertPdfToMarkdown-${{ matrix.python-version }}-win
+          name: ConvertPdfToMarkdown-win
           path: dist/ConvertPdfToMarkdown.exe
 
   release:
@@ -55,7 +52,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ConvertPdfToMarkdown-3.11-win
+          name: ConvertPdfToMarkdown-win
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
